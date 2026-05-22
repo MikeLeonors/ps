@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ophion Lab | Strategic Trade Intelligence</title>
+
+    <!-- Tipografía sobria, editorial y contemporánea -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================================
+           1. DESIGN SYSTEM & TRANSLATION CLASSES
+        ========================================================= */
+
+        :root {
+            --bg: #FBFAF7;
+            --bg-white: #FFFFFF;
+            --bg-soft: #F4F1EA;
+            --bg-muted: #EEE9DF;
+
+            --ink: #171717;
+            --ink-soft: #3F3F3F;
+            --ink-muted: #737373;
+            --ink-faint: #A3A3A3;
+
+            --line: #E3DED3;
+            --line-strong: #CFC7B8;
+
+            --blue: #174EA6;
+            --blue-soft: #EAF1FF;
+            --sand: #D8C7A3;
+            --clay: #B88A5A;
+            --green: #60796B;
+
+            --shadow-soft: 0 22px 70px rgba(23, 23, 23, 0.06);
+            --shadow-card: 0 16px 46px rgba(23, 23, 23, 0.08);
+
+            --font-serif: 'Instrument Serif', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            --ease: cubic-bezier(0.19, 1, 0.22, 1);
+            --transition: all 0.7s var(--ease);
+        }
+
+        /* Language Toggle Logic */
+        body.en .es { display: none !important; }
+        body.es .en { display: none !important; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::selection {
+            background: var(--ink);
+            color: var(--bg);
+        }
+
+        a {
+            color: inherit;
+        }
+
+        img,
+        svg {
+            display: block;
+            max-width: 100%;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        /* =========================================================
+           2. UTILITIES
+        ========================================================= */
+
+        .container {
+            width: min(1400px, calc(100% - 8rem));
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.72rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-weight: 700;
+            color: var(--ink-muted);
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--line-strong);
+        }
+
+        .section-kicker {
+            font-size: 0.72rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-weight: 700;
+            color: var(--ink-muted);
+            margin-bottom: 1.2rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.08s; }
+        .delay-2 { transition-delay: 0.16s; }
+        .delay-3 { transition-delay: 0.24s; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            min-height: 46px;
+            padding: 0.9rem 1.15rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.78rem;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-dark {
+            background: var(--ink);
+            color: var(--bg);
+            border: 1px solid var(--ink);
+        }
+
+        .btn-dark:hover {
+            background: transparent;
+            color: var(--ink);
+            transform: translateY(-2px);
+        }
+
+        .btn-light {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--line-strong);
+        }
+
+        .btn-light:hover {
+            border-color: var(--ink);
+            background: var(--bg-white);
+            transform: translateY(-2px);
+        }
+
+        .arrow {
+            font-size: 0.95rem;
+            transform: translateY(-1px);
+        }
+
+        /* Language Switcher Button */
+        .lang-toggle {
+            background: none;
+            border: none;
+            font-weight: 800;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            color: var(--ink-muted);
+            transition: color 0.3s ease;
+        }
+
+        .lang-toggle:hover { color: var(--ink); }
+        .lang-toggle .active { color: var(--ink); }
+        .lang-toggle .inactive { opacity: 0.5; transition: opacity 0.3s ease; }
+        .lang-toggle:hover .inactive { opacity: 0.8; }
+
+        /* =========================================================
+           3. NAVBAR
+        ========================================================= */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.25rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            background: rgba(251, 250, 247, 0.86);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(227, 222, 211, 0.78);
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            padding: 0.9rem 4rem;
+            background: rgba(251, 250, 247, 0.96);
+        }
+
+        .logo {
+            text-decoration: none;
+            font-family: var(--font-serif);
+            font-size: 1.85rem;
+            line-height: 1;
+            letter-spacing: -0.045em;
+            color: var(--ink);
+        }
+
+        .logo span { color: var(--blue); }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2.3rem;
+        }
+
+        .nav-center a {
+            position: relative;
+            text-decoration: none;
+            font-size: 0.72rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 700;
+            color: var(--ink-muted);
+            transition: color 0.3s ease;
+        }
+
+        .nav-center a:hover { color: var(--ink); }
+
+        .nav-center a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.45rem;
+            width: 100%;
+            height: 1px;
+            background: var(--ink);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.35s var(--ease);
+        }
+
+        .nav-center a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .nav-note {
+            font-size: 0.72rem;
+            color: var(--ink-muted);
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: var(--bg-white);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            position: relative;
+            width: 16px;
+            height: 1px;
+            background: var(--ink);
+            display: block;
+        }
+
+        .mobile-menu span::before,
+        .mobile-menu span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 16px;
+            height: 1px;
+            background: var(--ink);
+        }
+
+        .mobile-menu span::before { top: -5px; }
+        .mobile-menu span::after { top: 5px; }
+
+        /* =========================================================
+           4. HERO
+        ========================================================= */
+
+        #hero {
+            min-height: 100vh;
+            padding: 9rem 4rem 4rem;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 84% 18%, rgba(216, 199, 163, 0.35), transparent 28%),
+                linear-gradient(180deg, var(--bg) 0%, #FFFFFF 100%);
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(23, 23, 23, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(23, 23, 23, 0.035) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 82%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            width: min(1400px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .hero-copy { max-width: 780px; }
+
+        .hero-copy h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(3.7rem, 7vw, 8.5rem);
+            line-height: 0.9;
+            letter-spacing: -0.065em;
+            font-weight: 400;
+            margin: 1.7rem 0 2rem;
+        }
+
+        .hero-copy h1 em {
+            font-style: italic;
+            color: var(--blue);
+        }
+
+        .hero-copy p {
+            max-width: 620px;
+            font-size: 1.08rem;
+            line-height: 1.85;
+            color: var(--ink-soft);
+            font-weight: 350;
+            margin-bottom: 2.4rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .hero-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hero-meta-item {
+            padding: 1.25rem 1.25rem 1.25rem 0;
+            border-right: 1px solid var(--line);
+        }
+
+        .hero-meta-item:last-child {
+            border-right: 0;
+            padding-left: 1.25rem;
+        }
+
+        .hero-meta-item strong {
+            display: block;
+            font-size: 1.25rem;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero-meta-item span {
+            display: block;
+            color: var(--ink-muted);
+            font-size: 0.74rem;
+            line-height: 1.45;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+        }
+
+        .hero-panel {
+            position: relative;
+            min-height: 610px;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .hero-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 70% 20%, rgba(23, 78, 166, 0.08), transparent 28%),
+                radial-gradient(circle at 18% 74%, rgba(216, 199, 163, 0.26), transparent 32%);
+            pointer-events: none;
+        }
+
+        .panel-top {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.15rem 1.25rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .panel-title {
+            display: grid;
+            gap: 0.12rem;
+        }
+
+        .panel-title strong {
+            font-size: 0.72rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-weight: 800;
+        }
+
+        .panel-title span {
+            font-size: 0.76rem;
+            color: var(--ink-muted);
+        }
+
+        .panel-status {
+            font-size: 0.66rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--blue);
+            border: 1px solid var(--line-strong);
+            padding: 0.45rem 0.6rem;
+            border-radius: 999px;
+            background: var(--bg);
+            font-weight: 800;
+        }
+
+        .quiet-map {
+            position: absolute;
+            inset: 4.95rem 1.25rem 1.25rem;
+            border: 1px solid var(--line);
+            background:
+                linear-gradient(180deg, rgba(251,250,247,0.5), rgba(255,255,255,0.86)),
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(23,23,23,0.035) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(23,23,23,0.035) 40px);
+            overflow: hidden;
+        }
+
+        .quiet-map svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-line {
+            fill: none;
+            stroke: var(--line-strong);
+            stroke-width: 1.2;
+            stroke-dasharray: 420;
+            stroke-dashoffset: 420;
+            animation: drawQuietLine 7s var(--ease) infinite alternate;
+        }
+
+        .map-line.blue {
+            stroke: var(--blue);
+            stroke-width: 1.4;
+            opacity: 0.72;
+            animation-delay: 0.5s;
+        }
+
+        .map-line.sand {
+            stroke: var(--clay);
+            opacity: 0.5;
+            animation-delay: 1s;
+        }
+
+        @keyframes drawQuietLine {
+            0% { stroke-dashoffset: 420; opacity: 0.25; }
+            100% { stroke-dashoffset: 0; opacity: 0.85; }
+        }
+
+        .map-node {
+            position: absolute;
+            z-index: 6;
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: var(--ink);
+            box-shadow: 0 0 0 7px rgba(23,23,23,0.045);
+            animation: nodeBreath 4.8s ease-in-out infinite;
+        }
+
+        /* Language specific labels for the map nodes */
+        body.en .map-node::after { content: attr(data-label-en); }
+        body.es .map-node::after { content: attr(data-label-es); }
+
+        .map-node::after {
+            position: absolute;
+            left: 16px;
+            top: -5px;
+            white-space: nowrap;
+            font-size: 0.66rem;
+            line-height: 1;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--ink-muted);
+        }
+
+        .map-node.mx { left: 39%; top: 61%; background: var(--blue); }
+        .map-node.us { left: 52%; top: 35%; background: var(--ink); animation-delay: 0.4s; }
+        .map-node.ca { left: 42%; top: 18%; background: var(--clay); animation-delay: 0.8s; }
+        .map-node.eu { left: 74%; top: 44%; background: var(--green); animation-delay: 1.2s; }
+
+        @keyframes nodeBreath {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 6px rgba(23,23,23,0.04); }
+            50% { transform: scale(0.88); box-shadow: 0 0 0 10px rgba(23,23,23,0.025); }
+        }
+
+        .floating-card {
+            position: absolute;
+            z-index: 8;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid var(--line);
+            box-shadow: 0 18px 50px rgba(23, 23, 23, 0.07);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .floating-card.card-a { left: 1.25rem; bottom: 1.25rem; width: 250px; padding: 1rem; }
+        .floating-card.card-b { right: 1.25rem; top: 6.65rem; width: 238px; padding: 1rem; }
+        .floating-card.card-c { right: 1.25rem; bottom: 1.25rem; width: 240px; padding: 1rem; }
+
+        .card-label {
+            font-size: 0.64rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-weight: 800;
+            color: var(--ink-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .score {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .score strong { font-size: 2.15rem; line-height: 1; letter-spacing: -0.055em; }
+        .score span {
+            color: var(--blue);
+            font-size: 0.68rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 800;
+        }
+
+        .quiet-bars { display: grid; gap: 0.48rem; }
+        .bar-row {
+            display: grid;
+            grid-template-columns: 68px 1fr 24px;
+            gap: 0.48rem;
+            align-items: center;
+            font-size: 0.66rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-muted);
+            font-weight: 700;
+        }
+
+        .bar-track { height: 4px; background: var(--bg-muted); overflow: hidden; }
+        .bar-fill {
+            height: 100%;
+            background: var(--ink);
+            transform-origin: left;
+            animation: quietBar 6s ease-in-out infinite alternate;
+        }
+        .bar-fill.blue { background: var(--blue); width: 74%; }
+        .bar-fill.sand { background: var(--clay); width: 48%; animation-delay: 0.6s; }
+        .bar-fill.green { background: var(--green); width: 66%; animation-delay: 1.2s; }
+
+        @keyframes quietBar {
+            from { transform: scaleX(0.86); opacity: 0.75; }
+            to { transform: scaleX(1); opacity: 1; }
+        }
+
+        .signal-list { display: grid; gap: 0.72rem; }
+        .signal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--line);
+        }
+        .signal-item:last-child { border-bottom: 0; padding-bottom: 0; }
+        .signal-item span { font-size: 0.73rem; color: var(--ink-soft); }
+        .signal-item strong {
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--blue);
+        }
+
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.38rem;
+        }
+        .matrix span {
+            height: 32px;
+            border: 1px solid var(--line);
+            background: var(--bg);
+            animation: cellFade 5.5s ease-in-out infinite alternate;
+        }
+        .matrix span:nth-child(2n) { background: var(--blue-soft); animation-delay: 0.4s; }
+        .matrix span:nth-child(3n) { background: #F3EBDD; animation-delay: 0.8s; }
+        .matrix span:nth-child(5n) { background: #EEF3EF; animation-delay: 1.2s; }
+
+        @keyframes cellFade {
+            from { opacity: 0.55; }
+            to { opacity: 1; }
+        }
+
+        /* =========================================================
+           5. STRIP
+        ========================================================= */
+
+        .strip {
+            background: var(--bg-white);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            overflow: hidden;
+        }
+
+        .strip-inner {
+            width: max-content;
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            padding: 1rem 0;
+            animation: stripMove 46s linear infinite;
+        }
+
+        .strip-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--ink-muted);
+            font-size: 0.72rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.13em;
+            font-weight: 800;
+        }
+
+        .strip-item::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 999px;
+            background: var(--line-strong);
+        }
+
+        @keyframes stripMove {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* =========================================================
+           6. PERSPECTIVE
+        ========================================================= */
+
+        #perspectiva { padding: 9rem 0; background: var(--bg-white); }
+        .perspective-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 5rem; align-items: start; }
+        .sticky-copy { position: sticky; top: 8rem; }
+        .sticky-copy h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 5vw, 5.8rem);
+            line-height: 0.95;
+            letter-spacing: -0.06em;
+            font-weight: 400;
+            margin-bottom: 1.7rem;
+        }
+        .sticky-copy h2 em { color: var(--blue); font-style: italic; }
+        .sticky-copy p {
+            max-width: 540px;
+            color: var(--ink-soft);
+            font-size: 1.02rem;
+            line-height: 1.85;
+            font-weight: 350;
+        }
+
+        .principles { display: grid; border-top: 1px solid var(--line); }
+        .principle {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1.5rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--line);
+            transition: var(--transition);
+        }
+        .principle:hover { padding-left: 1rem; }
+        .principle-index {
+            font-size: 0.72rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-weight: 800;
+            color: var(--ink-muted);
+        }
+        .principle h3 {
+            font-size: 1.18rem;
+            line-height: 1.25;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.65rem;
+        }
+        .principle p {
+            max-width: 640px;
+            color: var(--ink-muted);
+            font-size: 0.96rem;
+            line-height: 1.75;
+        }
+
+        /* =========================================================
+           7. PRACTICES
+        ========================================================= */
+
+        #servicios { padding: 9rem 0; background: var(--bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .section-header { display: grid; grid-template-columns: 1fr 0.72fr; gap: 4rem; align-items: end; margin-bottom: 5rem; }
+        .section-header h2 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 5.8rem); line-height: 0.95; letter-spacing: -0.06em; font-weight: 400; }
+        .section-header p { color: var(--ink-soft); font-size: 1rem; line-height: 1.8; font-weight: 350; }
+
+        .practice-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: var(--bg-white); border: 1px solid var(--line); }
+        .practice { min-height: 510px; padding: 2rem; border-right: 1px solid var(--line); position: relative; overflow: hidden; transition: var(--transition); }
+        .practice:last-child { border-right: 0; }
+        .practice:hover { background: #FFFEFC; }
+        .practice-number {
+            color: var(--ink-muted);
+            font-size: 0.7rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-weight: 800;
+            margin-bottom: 5.2rem;
+        }
+        .practice h3 { font-family: var(--font-serif); font-size: 2.15rem; line-height: 1.02; letter-spacing: -0.04em; font-weight: 400; margin-bottom: 1.1rem; }
+        .practice p { color: var(--ink-muted); font-size: 0.96rem; line-height: 1.75; margin-bottom: 1.8rem; }
+        .practice ul { display: grid; gap: 0.8rem; list-style: none; }
+        .practice li { color: var(--ink-soft); font-size: 0.84rem; line-height: 1.45; display: flex; gap: 0.7rem; align-items: flex-start; }
+        .practice li::before { content: ''; width: 5px; height: 5px; border-radius: 999px; background: var(--line-strong); margin-top: 0.52rem; flex: 0 0 auto; }
+        .practice-mark { position: absolute; left: 2rem; right: 2rem; bottom: 2rem; height: 78px; border-top: 1px solid var(--line); }
+        .practice-mark svg { width: 100%; height: 100%; }
+        .mark-path { fill: none; stroke: var(--line-strong); stroke-width: 1.4; stroke-dasharray: 360; stroke-dashoffset: 360; animation: markDraw 8s var(--ease) infinite alternate; }
+        .practice:hover .mark-path { stroke: var(--blue); }
+
+        @keyframes markDraw { 0% { stroke-dashoffset: 360; opacity: 0.35; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+
+        /* =========================================================
+           8. INTELLIGENCE LAYER
+        ========================================================= */
+
+        #tecnologia { padding: 9rem 0; background: var(--bg-white); }
+        .tech-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 5rem; align-items: center; }
+        .tech-copy h2 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 5.8rem); line-height: 0.95; letter-spacing: -0.06em; font-weight: 400; margin-bottom: 1.5rem; }
+        .tech-copy h2 em { color: var(--blue); font-style: italic; }
+        .tech-copy p { max-width: 590px; color: var(--ink-soft); font-size: 1.02rem; line-height: 1.85; margin-bottom: 2rem; font-weight: 350; }
+        .tech-list { display: grid; gap: 0.9rem; margin-bottom: 2.3rem; }
+        .tech-list li { list-style: none; display: flex; gap: 0.8rem; align-items: flex-start; color: var(--ink-soft); font-size: 0.94rem; line-height: 1.55; }
+        .tech-list li::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: var(--line-strong); margin-top: 0.55rem; flex: 0 0 auto; }
+
+        .quiet-dashboard { min-height: 620px; background: var(--bg); border: 1px solid var(--line); box-shadow: var(--shadow-soft); position: relative; overflow: hidden; }
+        .quiet-dashboard::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 82% 16%, rgba(23, 78, 166, 0.07), transparent 30%), repeating-linear-gradient(0deg, transparent, transparent 43px, rgba(23,23,23,0.035) 44px), repeating-linear-gradient(90deg, transparent, transparent 43px, rgba(23,23,23,0.035) 44px); pointer-events: none; }
+        .dashboard-top { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.2rem; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.58); }
+        .dashboard-top strong { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 800; }
+        .dashboard-tabs { display: flex; gap: 0.45rem; }
+        .dashboard-tabs span { padding: 0.38rem 0.55rem; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-muted); font-size: 0.62rem; line-height: 1; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; background: var(--bg-white); }
+        .dashboard-body { position: absolute; inset: 3.7rem 0 0; display: grid; grid-template-columns: 1fr 0.82fr; }
+        .network { position: relative; border-right: 1px solid var(--line); }
+        .network svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .network-line { stroke: var(--line-strong); stroke-width: 1; opacity: 0.65; stroke-dasharray: 240; stroke-dashoffset: 240; animation: networkDraw 9s var(--ease) infinite alternate; }
+        .network-line.blue { stroke: var(--blue); opacity: 0.5; animation-delay: 0.6s; }
+        .network-line.clay { stroke: var(--clay); opacity: 0.45; animation-delay: 1.2s; }
+
+        @keyframes networkDraw { 0% { stroke-dashoffset: 240; } 100% { stroke-dashoffset: 0; } }
+
+        .network-point { position: absolute; width: 9px; height: 9px; border-radius: 999px; background: var(--ink); z-index: 5; animation: pointQuiet 5.5s ease-in-out infinite; }
+        .network-point.p1 { left: 18%; top: 25%; }
+        .network-point.p2 { left: 42%; top: 38%; background: var(--blue); animation-delay: 0.4s; }
+        .network-point.p3 { left: 68%; top: 25%; background: var(--clay); animation-delay: 0.8s; }
+        .network-point.p4 { left: 31%; top: 68%; background: var(--green); animation-delay: 1.2s; }
+        .network-point.p5 { left: 74%; top: 72%; background: var(--ink-muted); animation-delay: 1.6s; }
+
+        @keyframes pointQuiet { 0%, 100% { transform: scale(1); opacity: 0.95; } 50% { transform: scale(0.78); opacity: 0.6; } }
+
+        .network-caption { position: absolute; left: 1.2rem; right: 1.2rem; bottom: 1.2rem; background: rgba(255,255,255,0.84); border: 1px solid var(--line); padding: 1rem; z-index: 6; backdrop-filter: blur(12px); }
+        .network-caption strong { display: block; font-size: 0.72rem; line-height: 1; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 800; margin-bottom: 0.45rem; }
+        .network-caption span { display: block; color: var(--ink-muted); font-size: 0.78rem; line-height: 1.6; }
+        .insight-stack { display: grid; grid-template-rows: repeat(3, 1fr); background: rgba(255,255,255,0.42); }
+        .insight { padding: 1.3rem; border-bottom: 1px solid var(--line); }
+        .insight:last-child { border-bottom: 0; }
+        .insight h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.13em; font-weight: 800; margin-bottom: 0.75rem; }
+        .insight p { color: var(--ink-muted); font-size: 0.84rem; line-height: 1.65; margin-bottom: 1rem; }
+        .meter { height: 4px; background: var(--bg-muted); overflow: hidden; }
+        .meter span { display: block; height: 100%; background: var(--ink); transform-origin: left; animation: meterQuiet 6s ease-in-out infinite alternate; }
+        .meter .m1 { width: 82%; background: var(--blue); }
+        .meter .m2 { width: 64%; background: var(--clay); animation-delay: 0.6s; }
+        .meter .m3 { width: 73%; background: var(--green); animation-delay: 1.2s; }
+
+        @keyframes meterQuiet { from { transform: scaleX(0.82); opacity: 0.68; } to { transform: scaleX(1); opacity: 1; } }
+
+        /* =========================================================
+           9. OUTPUTS
+        ========================================================= */
+
+        #outputs { padding: 9rem 0; background: var(--bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .outputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .output { min-height: 330px; background: var(--bg-white); border: 1px solid var(--line); padding: 2rem; position: relative; overflow: hidden; transition: var(--transition); }
+        .output:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); }
+        .output.large { grid-row: span 2; min-height: 690px; }
+        .output-label { font-size: 0.7rem; line-height: 1; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 800; color: var(--ink-muted); margin-bottom: 1.2rem; }
+        .output h3 { font-family: var(--font-serif); font-size: 2.2rem; line-height: 1.02; letter-spacing: -0.045em; font-weight: 400; margin-bottom: 1rem; }
+        .output p { color: var(--ink-muted); font-size: 0.96rem; line-height: 1.75; max-width: 540px; }
+        .document-preview { position: absolute; left: 2rem; right: 2rem; bottom: 2rem; height: 310px; border: 1px solid var(--line); background: var(--bg); padding: 1.2rem; }
+        .doc-header { height: 58px; border-bottom: 1px solid var(--line); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: flex-start; }
+        .doc-title { width: 46%; height: 8px; background: var(--ink); margin-top: 0.25rem; }
+        .doc-badge { width: 68px; height: 20px; border: 1px solid var(--line-strong); border-radius: 999px; }
+        .doc-line { height: 7px; background: var(--line); margin-bottom: 0.72rem; }
+        .doc-line.short { width: 48%; }
+        .doc-line.mid { width: 72%; }
+        .doc-line.blue { background: rgba(23, 78, 166, 0.26); }
+        .mini-chart { position: absolute; left: 2rem; right: 2rem; bottom: 2rem; height: 86px; border-top: 1px solid var(--line); }
+        .mini-chart svg { width: 100%; height: 100%; }
+        .mini-path { fill: none; stroke: var(--blue); stroke-width: 1.5; stroke-dasharray: 420; stroke-dashoffset: 420; animation: miniDraw 8s var(--ease) infinite alternate; }
+
+        @keyframes miniDraw { to { stroke-dashoffset: 0; } }
+
+        /* =========================================================
+           10. CTA + FOOTER
+        ========================================================= */
+
+        #contacto { padding: 9rem 0 3rem; background: var(--bg-white); }
+        .cta { background: var(--bg); border: 1px solid var(--line); padding: 4rem; display: grid; grid-template-columns: 1fr 0.42fr; gap: 4rem; align-items: end; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 84% 24%, rgba(216, 199, 163, 0.34), transparent 28%), repeating-linear-gradient(0deg, transparent, transparent 51px, rgba(23,23,23,0.035) 52px), repeating-linear-gradient(90deg, transparent, transparent 51px, rgba(23,23,23,0.035) 52px); pointer-events: none; }
+        .cta-copy, .cta-actions { position: relative; z-index: 2; }
+        .cta h2 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 5.8rem); line-height: 0.95; letter-spacing: -0.06em; font-weight: 400; max-width: 780px; margin-bottom: 1.35rem; }
+        .cta h2 em { color: var(--blue); font-style: italic; }
+        .cta p { max-width: 620px; color: var(--ink-soft); font-size: 1.02rem; line-height: 1.85; font-weight: 350; }
+        .cta-actions { display: grid; gap: 1rem; }
+        .contact-card { border: 1px solid var(--line); background: var(--bg-white); padding: 1rem; }
+        .contact-card span { display: block; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 800; color: var(--ink-muted); margin-bottom: 0.35rem; }
+        .contact-card strong { display: block; font-size: 0.92rem; line-height: 1.35; }
+        footer { padding-top: 4rem; }
+        .footer-grid { display: grid; grid-template-columns: 1.45fr repeat(3, 1fr); gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--line); }
+        .footer-brand p { max-width: 380px; color: var(--ink-muted); font-size: 0.92rem; line-height: 1.7; margin-top: 1.1rem; }
+        .footer-col h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 800; margin-bottom: 1.15rem; }
+        .footer-col ul { list-style: none; display: grid; gap: 0.72rem; }
+        .footer-col a { text-decoration: none; color: var(--ink-muted); font-size: 0.9rem; transition: color 0.25s ease; }
+        .footer-col a:hover { color: var(--ink); }
+        .footer-bottom { display: flex; justify-content: space-between; gap: 2rem; padding-top: 1.5rem; color: var(--ink-muted); font-size: 0.8rem; }
+
+        /* =========================================================
+           11. RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1180px) {
+            nav { padding: 1.05rem 2rem; }
+            nav.scrolled { padding: 0.85rem 2rem; }
+            .nav-center, .nav-note { display: none; }
+            .mobile-menu { display: flex; }
+            #hero { padding: 7.8rem 2rem 3rem; }
+            .hero-grid, .perspective-grid, .tech-grid, .section-header, .cta { grid-template-columns: 1fr; }
+            .hero-panel { min-height: 570px; }
+            .container { width: min(100% - 4rem, 1180px); }
+            .sticky-copy { position: static; }
+            .practice-grid { grid-template-columns: 1fr; }
+            .practice { min-height: 420px; border-right: 0; border-bottom: 1px solid var(--line); }
+            .practice:last-child { border-bottom: 0; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 760px) {
+            nav { padding: 0.95rem 1.2rem; }
+            nav.scrolled { padding: 0.78rem 1.2rem; }
+            .logo { font-size: 1.62rem; }
+            .nav-actions .btn { display: none; }
+            #hero { padding: 7rem 1.2rem 2rem; }
+            .hero-copy h1 { font-size: 3.45rem; }
+            .hero-actions { flex-direction: column; align-items: stretch; }
+            .hero-meta { grid-template-columns: 1fr; }
+            .hero-meta-item { border-right: 0; border-bottom: 1px solid var(--line); padding: 1.15rem 0; }
+            .hero-meta-item:last-child { border-bottom: 0; padding-left: 0; }
+            .hero-panel { min-height: 690px; }
+            .floating-card.card-a, .floating-card.card-b, .floating-card.card-c { left: 1rem; right: 1rem; width: auto; }
+            .floating-card.card-b { top: 6.25rem; }
+            .floating-card.card-a { top: 18rem; bottom: auto; }
+            .floating-card.card-c { bottom: 1rem; }
+            .map-node::after { display: none !important; }
+            .container { width: min(100% - 2.4rem, 760px); }
+            #perspectiva, #servicios, #tecnologia, #outputs, #contacto { padding-top: 5.5rem; padding-bottom: 5.5rem; }
+            .sticky-copy h2, .section-header h2, .tech-copy h2, .cta h2 { font-size: 3.05rem; }
+            .principle { grid-template-columns: 1fr; gap: 0.8rem; }
+            .principle:hover { padding-left: 0; }
+            .outputs-grid { grid-template-columns: 1fr; }
+            .output.large { min-height: 560px; }
+            .document-preview { height: 250px; }
+            .quiet-dashboard { min-height: 720px; }
+            .dashboard-body { grid-template-columns: 1fr; grid-template-rows: 1fr 0.9fr; }
+            .network { border-right: 0; border-bottom: 1px solid var(--line); }
+            .dashboard-tabs { display: none; }
+            .cta { padding: 2rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; }
+        }
+    </style>
+</head>
+
+<body class="en">
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================= -->
+
+    <nav id="navbar">
+        <a href="#hero" class="logo">Ophion<span>Lab.</span></a>
+
+        <div class="nav-center">
+            <a href="#perspectiva">
+                <span class="en">Perspective</span>
+                <span class="es">Perspectiva</span>
+            </a>
+            <a href="#servicios">
+                <span class="en">Practices</span>
+                <span class="es">Prácticas</span>
+            </a>
+            <a href="#tecnologia">
+                <span class="en">Intelligence</span>
+                <span class="es">Inteligencia</span>
+            </a>
+            <a href="#outputs">
+                <span class="en">Deliverables</span>
+                <span class="es">Entregables</span>
+            </a>
+        </div>
+
+        <div class="nav-actions">
+            <span class="nav-note">Strategic desk</span>
+            <button id="langToggle" class="lang-toggle" aria-label="Toggle language">
+                <span class="active">EN</span> / <span class="inactive">ES</span>
+            </button>
+            <a href="#contacto" class="btn btn-dark">
+                <span class="en">Contact</span>
+                <span class="es">Contacto</span>
+            </a>
+            <button class="mobile-menu" aria-label="Abrir menú">
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
+
+    <header id="hero">
+        <div class="hero-grid">
+
+            <div class="hero-copy reveal">
+                <div class="eyebrow">Strategic Trade Intelligence</div>
+
+                <h1>
+                    <span class="en">Serious intelligence for operating in <em>North America.</em></span>
+                    <span class="es">Inteligencia seria para operar en <em>Norteamérica.</em></span>
+                </h1>
+
+                <p>
+                    <span class="en">Ophion Lab integrates economic analysis, regulatory intelligence, data technology, and geopolitical insight for companies, governments, and investors who need to make critical decisions under the USMCA framework.</span>
+                    <span class="es">Ophion Lab integra análisis económico, inteligencia regulatoria, tecnología de datos y lectura geopolítica para empresas, gobiernos e inversionistas que necesitan tomar decisiones críticas bajo el marco del T-MEC.</span>
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#servicios" class="btn btn-dark">
+                        <span class="en">Explore practices</span>
+                        <span class="es">Explorar prácticas</span>
+                        <span class="arrow">→</span>
+                    </a>
+
+                    <a href="#tecnologia" class="btn btn-light">
+                        <span class="en">View analytical capabilities</span>
+                        <span class="es">Ver capacidades analíticas</span>
+                    </a>
+                </div>
+
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <strong>
+                            <span class="en">USMCA</span>
+                            <span class="es">T-MEC</span>
+                        </strong>
+                        <span>
+                            <span class="en">Trade, compliance, and rules of origin</span>
+                            <span class="es">Comercio, cumplimiento y reglas de origen</span>
+                        </span>
+                    </div>
+
+                    <div class="hero-meta-item">
+                        <strong>
+                            <span class="en">3 countries</span>
+                            <span class="es">3 países</span>
+                        </strong>
+                        <span>
+                            <span class="en">Mexico, United States, and Canada</span>
+                            <span class="es">México, Estados Unidos y Canadá</span>
+                        </span>
+                    </div>
+
+                    <div class="hero-meta-item">
+                        <strong>360°</strong>
+                        <span>
+                            <span class="en">Political, tax, legal, and operational risk</span>
+                            <span class="es">Riesgo político, fiscal, legal y operativo</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-panel reveal delay-1" aria-label="Panel de inteligencia estratégica">
+                <div class="panel-top">
+                    <div class="panel-title">
+                        <strong>North America Brief</strong>
+                        <span>Routes · Signals · Exposure</span>
+                    </div>
+
+                    <div class="panel-status">Model view</div>
+                </div>
+
+                <div class="quiet-map">
+                    <svg viewBox="0 0 600 520" preserveAspectRatio="none">
+                        <path class="map-line blue" d="M245,320 C300,260 320,210 335,170 C355,120 340,80 285,72" />
+                        <path class="map-line" d="M245,320 C360,330 450,290 488,220 C520,160 486,120 430,96" />
+                        <path class="map-line sand" d="M285,72 C380,82 430,136 460,210 C480,260 488,310 500,372" />
+                        <path class="map-line" d="M245,320 C190,290 160,240 155,192 C150,132 185,88 285,72" />
+                        <path class="map-line blue" d="M245,320 C300,380 390,395 500,372" />
+                    </svg>
+
+                    <span class="map-node mx" data-label-en="Mexico" data-label-es="México"></span>
+                    <span class="map-node us" data-label-en="United States" data-label-es="Estados Unidos"></span>
+                    <span class="map-node ca" data-label-en="Canada" data-label-es="Canadá"></span>
+                    <span class="map-node eu" data-label-en="Foreign Capital" data-label-es="Capital externo"></span>
+                </div>
+
+                <div class="floating-card card-b">
+                    <div class="card-label">
+                        <span class="en">Active signals</span>
+                        <span class="es">Señales activas</span>
+                    </div>
+
+                    <div class="signal-list">
+                        <div class="signal-item">
+                            <span>
+                                <span class="en">Rules of origin</span>
+                                <span class="es">Reglas de origen</span>
+                            </span>
+                            <strong>
+                                <span class="en">High</span>
+                                <span class="es">Alta</span>
+                            </strong>
+                        </div>
+
+                        <div class="signal-item">
+                            <span>
+                                <span class="en">2026 Review</span>
+                                <span class="es">Revisión 2026</span>
+                            </span>
+                            <strong>
+                                <span class="en">Critical</span>
+                                <span class="es">Crítica</span>
+                            </strong>
+                        </div>
+
+                        <div class="signal-item">
+                            <span>Nearshoring</span>
+                            <strong>
+                                <span class="en">Expansion</span>
+                                <span class="es">Expansión</span>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="floating-card card-a">
+                    <div class="card-label">
+                        <span class="en">Composite exposure</span>
+                        <span class="es">Exposición compuesta</span>
+                    </div>
+
+                    <div class="score">
+                        <strong>74.2</strong>
+                        <span>
+                            <span class="en">Monitoring</span>
+                            <span class="es">Monitoreo</span>
+                        </span>
+                    </div>
+
+                    <div class="quiet-bars">
+                        <div class="bar-row">
+                            <span>Legal</span>
+                            <div class="bar-track">
+                                <div class="bar-fill blue"></div>
+                            </div>
+                            <span>74</span>
+                        </div>
+
+                        <div class="bar-row">
+                            <span>
+                                <span class="en">Tax</span>
+                                <span class="es">Fiscal</span>
+                            </span>
+                            <div class="bar-track">
+                                <div class="bar-fill sand"></div>
+                            </div>
+                            <span>48</span>
+                        </div>
+
+                        <div class="bar-row">
+                            <span>
+                                <span class="en">Political</span>
+                                <span class="es">Político</span>
+                            </span>
+                            <div class="bar-track">
+                                <div class="bar-fill green"></div>
+                            </div>
+                            <span>66</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="floating-card card-c">
+                    <div class="card-label">
+                        <span class="en">Sector matrix</span>
+                        <span class="es">Matriz sectorial</span>
+                    </div>
+
+                    <div class="matrix">
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- =========================================================
+         STRIP
+    ========================================================= -->
+
+    <section class="strip" aria-label="Specialization areas">
+        <div class="strip-inner">
+            <div class="strip-item">Trade compliance</div>
+            <div class="strip-item">Nearshoring strategy</div>
+            <div class="strip-item">Regulatory intelligence</div>
+            <div class="strip-item">Economic risk</div>
+            <div class="strip-item">Supply chain analytics</div>
+            <div class="strip-item">Executive briefings</div>
+
+            <div class="strip-item">Trade compliance</div>
+            <div class="strip-item">Nearshoring strategy</div>
+            <div class="strip-item">Regulatory intelligence</div>
+            <div class="strip-item">Economic risk</div>
+            <div class="strip-item">Supply chain analytics</div>
+            <div class="strip-item">Executive briefings</div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         PERSPECTIVA
+    ========================================================= -->
+
+    <section id="perspectiva">
+        <div class="container perspective-grid">
+
+            <div class="sticky-copy reveal">
+                <div class="section-kicker">
+                    <span class="en">Firm perspective</span>
+                    <span class="es">Perspectiva de firma</span>
+                </div>
+
+                <h2>
+                    <span class="en">We don't sell reports. We build <em>strategic judgment.</em></span>
+                    <span class="es">No vendemos reportes. Construimos <em>criterio estratégico.</em></span>
+                </h2>
+
+                <p>
+                    <span class="en">In integrated markets, a commercial decision is never just commercial. It is also regulatory, tax, logistical, political, and reputational. Our practice translates this complex environment into actionable scenarios for upper management.</span>
+                    <span class="es">En mercados integrados, una decisión comercial nunca es solo comercial. También es regulatoria, fiscal, logística, política y reputacional. Nuestra práctica traduce ese entorno complejo en escenarios accionables para alta dirección.</span>
+                </p>
+            </div>
+
+            <div class="principles">
+
+                <article class="principle reveal">
+                    <div class="principle-index">01 / Rigor</div>
+
+                    <div>
+                        <h3>
+                            <span class="en">Evidence-based intelligence, not intuition.</span>
+                            <span class="es">Inteligencia basada en evidencia, no en intuición.</span>
+                        </h3>
+
+                        <p>
+                            <span class="en">We combine open sources, economic data, regulatory information, institutional signals, and comparative analysis to produce verifiable and useful diagnostics for investment, expansion, and compliance decisions.</span>
+                            <span class="es">Combinamos fuentes abiertas, datos económicos, información regulatoria, señales institucionales y análisis comparado para producir diagnósticos verificables y útiles para decisiones de inversión, expansión y cumplimiento.</span>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="principle reveal delay-1">
+                    <div class="principle-index">
+                        <span class="en">02 / Strategy</span>
+                        <span class="es">02 / Estrategia</span>
+                    </div>
+
+                    <div>
+                        <h3>
+                            <span class="en">Integrated reading of risks and opportunities.</span>
+                            <span class="es">Lectura integrada de riesgos y oportunidades.</span>
+                        </h3>
+
+                        <p>
+                            <span class="en">We analyze how trade agreements, industrial policy, electoral context, supply chains, and regulatory pressure interact to anticipate movements that can alter costs, permits, incentives, and margins.</span>
+                            <span class="es">Analizamos cómo interactúan tratados comerciales, política industrial, coyuntura electoral, cadenas de suministro y presión regulatoria para anticipar movimientos que pueden alterar costos, permisos, incentivos y márgenes.</span>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="principle reveal delay-2">
+                    <div class="principle-index">
+                        <span class="en">03 / Technology</span>
+                        <span class="es">03 / Tecnología</span>
+                    </div>
+
+                    <div>
+                        <h3>
+                            <span class="en">Models, dashboards, and executive visualizations.</span>
+                            <span class="es">Modelos, tableros y visualizaciones ejecutivas.</span>
+                        </h3>
+
+                        <p>
+                            <span class="en">We design analytical architectures that allow monitoring critical variables, comparing scenarios, and translating large volumes of information into understandable decisions for boards of directors, legal teams, and expansion units.</span>
+                            <span class="es">Diseñamos arquitecturas analíticas que permiten monitorear variables críticas, comparar escenarios y convertir grandes volúmenes de información en decisiones comprensibles para consejos directivos, equipos legales y unidades de expansión.</span>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="principle reveal delay-3">
+                    <div class="principle-index">
+                        <span class="en">04 / Trust</span>
+                        <span class="es">04 / Confianza</span>
+                    </div>
+
+                    <div>
+                        <h3>
+                            <span class="en">Sober communication for high-level audiences.</span>
+                            <span class="es">Comunicación sobria para públicos de alto nivel.</span>
+                        </h3>
+
+                        <p>
+                            <span class="en">Our deliverables are designed for demanding stakeholders: multinational companies, investors, governments, business chambers, funds, and management teams that require clarity, traceability, and judgment.</span>
+                            <span class="es">Nuestros entregables están diseñados para interlocutores exigentes: empresas multinacionales, inversionistas, gobiernos, cámaras empresariales, fondos y equipos directivos que requieren claridad, trazabilidad y criterio.</span>
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         PRÁCTICAS
+    ========================================================= -->
+
+    <section id="servicios">
+        <div class="container">
+
+            <div class="section-header reveal">
+                <div>
+                    <div class="section-kicker">
+                        <span class="en">Core practices</span>
+                        <span class="es">Prácticas principales</span>
+                    </div>
+                    <h2>
+                        <span class="en">Intelligence for cross-border decisions.</span>
+                        <span class="es">Inteligencia para decisiones transfronterizas.</span>
+                    </h2>
+                </div>
+
+                <p>
+                    <span class="en">Ophion Lab operates at the intersection of international trade, regulation, data, and corporate strategy. Each practice can be engaged as a diagnostic, ongoing advisory, or analytical platform.</span>
+                    <span class="es">Ophion Lab opera en la intersección entre comercio internacional, regulación, datos y estrategia corporativa. Cada práctica puede contratarse como diagnóstico, acompañamiento continuo o plataforma analítica.</span>
+                </p>
+            </div>
+
+            <div class="practice-grid">
+
+                <article class="practice reveal">
+                    <div class="practice-number">Practice 01</div>
+
+                    <h3>
+                        <span class="en">USMCA Advisory & Trade Compliance</span>
+                        <span class="es">Asesoría T-MEC & cumplimiento comercial</span>
+                    </h3>
+
+                    <p>
+                        <span class="en">Diagnostics on rules of origin, tariff exposure, labor obligations, dispute risks, and compliance conditions for companies operating in Mexico, the United States, and Canada.</span>
+                        <span class="es">Diagnóstico sobre reglas de origen, exposición arancelaria, obligaciones laborales, riesgos de controversia y condiciones de cumplimiento para empresas que operan en México, Estados Unidos y Canadá.</span>
+                    </p>
+
+                    <ul>
+                        <li>
+                            <span class="en">Mapping of regulatory risks by sector and value chain.</span>
+                            <span class="es">Mapeo de riesgos regulatorios por sector y cadena de valor.</span>
+                        </li>
+                        <li>
+                            <span class="en">Compliance assessment under rules of origin and regional content.</span>
+                            <span class="es">Evaluación de cumplimiento bajo reglas de origen y contenido regional.</span>
+                        </li>
+                        <li>
+                            <span class="en">Executive briefings for legal, tax, and commercial management.</span>
+                            <span class="es">Briefings ejecutivos para dirección jurídica, fiscal y comercial.</span>
+                        </li>
+                    </ul>
+
+                    <div class="practice-mark">
+                        <svg viewBox="0 0 420 80" preserveAspectRatio="none">
+                            <path class="mark-path" d="M0,58 C68,48 92,20 150,34 C214,50 248,15 312,24 C360,31 386,18 420,12" />
+                        </svg>
+                    </div>
+                </article>
+
+                <article class="practice reveal delay-1">
+                    <div class="practice-number">Practice 02</div>
+
+                    <h3>
+                        <span class="en">Nearshoring & Expansion Architecture</span>
+                        <span class="es">Nearshoring & arquitectura de expansión</span>
+                    </h3>
+
+                    <p>
+                        <span class="en">We model location alternatives, political exposure, infrastructure, talent, incentives, logistical costs, and operational resilience for relocation or industrial expansion decisions.</span>
+                        <span class="es">Modelamos alternativas de localización, exposición política, infraestructura, talento, incentivos, costos logísticos y resiliencia operativa para decisiones de relocalización o expansión industrial.</span>
+                    </p>
+
+                    <ul>
+                        <li>
+                            <span class="en">Territorial comparison for investment and operation.</span>
+                            <span class="es">Comparación territorial para inversión y operación.</span>
+                        </li>
+                        <li>
+                            <span class="en">Cost, risk, and opportunity scenarios by location.</span>
+                            <span class="es">Escenarios de costo, riesgo y oportunidad por ubicación.</span>
+                        </li>
+                        <li>
+                            <span class="en">Design of entry routes into the Mexican and North American markets.</span>
+                            <span class="es">Diseño de rutas de entrada al mercado mexicano y norteamericano.</span>
+                        </li>
+                    </ul>
+
+                    <div class="practice-mark">
+                        <svg viewBox="0 0 420 80" preserveAspectRatio="none">
+                            <path class="mark-path" d="M0,42 C72,12 112,65 168,36 C235,2 284,60 342,34 C378,17 398,22 420,18" />
+                        </svg>
+                    </div>
+                </article>
+
+                <article class="practice reveal delay-2">
+                    <div class="practice-number">Practice 03</div>
+
+                    <h3>
+                        <span class="en">Regulatory & Geopolitical Intelligence</span>
+                        <span class="es">Inteligencia regulatoria y geopolítica</span>
+                    </h3>
+
+                    <p>
+                        <span class="en">We monitor institutional signals, legislative debates, key actor positions, electoral cycles, and regulatory changes that can affect operations, investments, permits, or reputation.</span>
+                        <span class="es">Monitoreamos señales institucionales, debates legislativos, posiciones de actores clave, ciclos electorales y cambios regulatorios que pueden afectar operaciones, inversiones, permisos o reputación.</span>
+                    </p>
+
+                    <ul>
+                        <li>
+                            <span class="en">Early warning systems for top management.</span>
+                            <span class="es">Sistemas de alerta temprana para alta dirección.</span>
+                        </li>
+                        <li>
+                            <span class="en">Analysis of political actors, coalitions, and incentives.</span>
+                            <span class="es">Análisis de actores, coaliciones e incentivos políticos.</span>
+                        </li>
+                        <li>
+                            <span class="en">Risk scenarios regarding USMCA review and regulatory changes.</span>
+                            <span class="es">Escenarios de riesgo ante revisión del T-MEC y cambios normativos.</span>
+                        </li>
+                    </ul>
+
+                    <div class="practice-mark">
+                        <svg viewBox="0 0 420 80" preserveAspectRatio="none">
+                            <path class="mark-path" d="M0,64 C58,60 95,45 140,47 C195,49 218,20 272,26 C333,33 358,10 420,20" />
+                        </svg>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         INTELLIGENCE LAYER
+    ========================================================= -->
+
+    <section id="tecnologia">
+        <div class="container tech-grid">
+
+            <div class="tech-copy reveal">
+                <div class="section-kicker">
+                    <span class="en">Analytical layer</span>
+                    <span class="es">Capa analítica</span>
+                </div>
+
+                <h2>
+                    <span class="en">Data, signals, and scenarios in a single <em>executive layer.</em></span>
+                    <span class="es">Datos, señales y escenarios en una sola <em>capa ejecutiva.</em></span>
+                </h2>
+
+                <p>
+                    <span class="en">We develop proprietary dashboards, monitoring systems, and analytical models to track supply chains, regulatory exposure, sector risks, political signals, and expansion opportunities.</span>
+                    <span class="es">Desarrollamos tableros propietarios, sistemas de monitoreo y modelos de análisis para observar cadenas de suministro, exposición regulatoria, riesgos sectoriales, señales políticas y oportunidades de expansión.</span>
+                </p>
+
+                <ul class="tech-list">
+                    <li>
+                        <span class="en">Executive dashboards for boards of directors and strategy teams.</span>
+                        <span class="es">Dashboards ejecutivos para consejos directivos y equipos de estrategia.</span>
+                    </li>
+                    <li>
+                        <span class="en">Risk models by sector, territory, supplier, or logistics route.</span>
+                        <span class="es">Modelos de riesgo por sector, territorio, proveedor o ruta logística.</span>
+                    </li>
+                    <li>
+                        <span class="en">Data architectures to integrate public, private, and regulatory sources.</span>
+                        <span class="es">Arquitecturas de datos para integrar fuentes públicas, privadas y regulatorias.</span>
+                    </li>
+                    <li>
+                        <span class="en">Early warnings for relevant changes in the commercial or political environment.</span>
+                        <span class="es">Alertas tempranas ante cambios relevantes en entorno comercial o político.</span>
+                    </li>
+                </ul>
+
+                <a href="#contacto" class="btn btn-dark">
+                    <span class="en">Request strategic demo</span>
+                    <span class="es">Solicitar demo estratégica</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+
+            <div class="quiet-dashboard reveal delay-1">
+                <div class="dashboard-top">
+                    <strong>Ophion Intelligence Layer</strong>
+
+                    <div class="dashboard-tabs">
+                        <span>Routes</span>
+                        <span>Risk</span>
+                        <span>Actors</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-body">
+
+                    <div class="network">
+                        <svg viewBox="0 0 520 420" preserveAspectRatio="none">
+                            <line class="network-line" x1="90" y1="100" x2="220" y2="160"></line>
+                            <line class="network-line blue" x1="220" y1="160" x2="355" y2="115"></line>
+                            <line class="network-line" x1="220" y1="160" x2="165" y2="285"></line>
+                            <line class="network-line clay" x1="165" y1="285" x2="385" y2="300"></line>
+                            <line class="network-line" x1="355" y1="115" x2="385" y2="300"></line>
+                            <line class="network-line blue" x1="90" y1="100" x2="165" y2="285"></line>
+                            <line class="network-line" x1="90" y1="100" x2="385" y2="300"></line>
+                            <line class="network-line clay" x1="220" y1="160" x2="385" y2="300"></line>
+                        </svg>
+
+                        <span class="network-point p1"></span>
+                        <span class="network-point p2"></span>
+                        <span class="network-point p3"></span>
+                        <span class="network-point p4"></span>
+                        <span class="network-point p5"></span>
+
+                        <div class="network-caption">
+                            <strong>
+                                <span class="en">Critical relationships detected</span>
+                                <span class="es">Relaciones críticas detectadas</span>
+                            </strong>
+
+                            <span>
+                                <span class="en">Integration of actors, routes, suppliers, regulatory signals, and political exposure in a single visualization.</span>
+                                <span class="es">Integración de actores, rutas, proveedores, señales regulatorias y exposición política en una misma visualización.</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="insight-stack">
+
+                        <article class="insight">
+                            <h4>Exposure score</h4>
+                            <p>
+                                <span class="en">Composite assessment of legal, tax, logistical, political, and sector risk.</span>
+                                <span class="es">Evaluación compuesta por riesgo legal, fiscal, logístico, político y sectorial.</span>
+                            </p>
+                            <div class="meter">
+                                <span class="m1"></span>
+                            </div>
+                        </article>
+
+                        <article class="insight">
+                            <h4>Regulatory pressure</h4>
+                            <p>
+                                <span class="en">Tracking of legislative changes, trade reviews, and institutional positions.</span>
+                                <span class="es">Seguimiento de cambios legislativos, revisión comercial y posturas institucionales.</span>
+                            </p>
+                            <div class="meter">
+                                <span class="m2"></span>
+                            </div>
+                        </article>
+
+                        <article class="insight">
+                            <h4>Market readiness</h4>
+                            <p>
+                                <span class="en">Reading of territorial viability, operational maturity, incentives, and entry conditions.</span>
+                                <span class="es">Lectura de viabilidad territorial, madurez operativa, incentivos y condiciones de entrada.</span>
+                            </p>
+                            <div class="meter">
+                                <span class="m3"></span>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================================================
+         OUTPUTS
+    ========================================================= -->
+
+    <section id="outputs">
+        <div class="container">
+
+            <div class="section-header reveal">
+                <div>
+                    <div class="section-kicker">
+                        <span class="en">Executive deliverables</span>
+                        <span class="es">Entregables ejecutivos</span>
+                    </div>
+                    <h2>
+                        <span class="en">Clear products for complex decisions.</span>
+                        <span class="es">Productos claros para decisiones complejas.</span>
+                    </h2>
+                </div>
+
+                <p>
+                    <span class="en">Form matters. Each product combines analytical depth, institutional design, and a structure intended to facilitate decisions in highly uncertain environments.</span>
+                    <span class="es">La forma importa. Cada producto combina profundidad analítica, diseño institucional y una estructura pensada para facilitar decisiones en entornos de alta incertidumbre.</span>
+                </p>
+            </div>
+
+            <div class="outputs-grid">
+
+                <article class="output large reveal">
+                    <div class="output-label">Flagship product</div>
+
+                    <h3>Executive Intelligence Brief</h3>
+
+                    <p>
+                        <span class="en">Top management document with diagnostics, scenarios, risk map, relevant actors, operational implications, and strategic recommendations.</span>
+                        <span class="es">Documento de alta dirección con diagnóstico, escenarios, mapa de riesgos, actores relevantes, implicaciones para operación y recomendaciones estratégicas.</span>
+                    </p>
+
+                    <div class="document-preview">
+                        <div class="doc-header">
+                            <div class="doc-title"></div>
+                            <div class="doc-badge"></div>
+                        </div>
+
+                        <div class="doc-line blue short"></div>
+                        <div class="doc-line"></div>
+                        <div class="doc-line mid"></div>
+                        <div class="doc-line"></div>
+                        <div class="doc-line short"></div>
+                        <div class="doc-line blue mid"></div>
+                        <div class="doc-line"></div>
+                        <div class="doc-line mid"></div>
+                        <div class="doc-line"></div>
+                        <div class="doc-line short"></div>
+                    </div>
+                </article>
+
+                <article class="output reveal delay-1">
+                    <div class="output-label">Dashboard</div>
+
+                    <h3>
+                        <span class="en">Risk and opportunity dashboard</span>
+                        <span class="es">Tablero de riesgo y oportunidad</span>
+                    </h3>
+
+                    <p>
+                        <span class="en">Interactive visualization of critical variables by country, sector, supply chain, supplier, route, or state/province.</span>
+                        <span class="es">Visualización interactiva de variables críticas por país, sector, cadena de suministro, proveedor, ruta o entidad federativa.</span>
+                    </p>
+
+                    <div class="mini-chart">
+                        <svg viewBox="0 0 500 90" preserveAspectRatio="none">
+                            <path class="mini-path" d="M0,70 C80,60 110,30 180,42 C255,58 305,16 380,26 C430,33 455,18 500,12"></path>
+                        </svg>
+                    </div>
+                </article>
+
+                <article class="output reveal delay-2">
+                    <div class="output-label">Scenario planning</div>
+
+                    <h3>
+                        <span class="en">Scenario models</span>
+                        <span class="es">Modelos de escenarios</span>
+                    </h3>
+
+                    <p>
+                        <span class="en">Construction of scenarios regarding USMCA review, new rules, electoral pressure, tariff changes, or logistical disruptions.</span>
+                        <span class="es">Construcción de escenarios ante revisión del T-MEC, nuevas reglas, presión electoral, cambios arancelarios o disrupciones logísticas.</span>
+                    </p>
+
+                    <div class="mini-chart">
+                        <svg viewBox="0 0 500 90" preserveAspectRatio="none">
+                            <path class="mini-path" d="M0,72 C70,18 125,76 190,38 C260,0 315,70 380,34 C435,4 470,28 500,18"></path>
+                        </svg>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         CONTACTO
+    ========================================================= -->
+
+    <section id="contacto">
+        <div class="container">
+
+            <div class="cta reveal">
+                <div class="cta-copy">
+                    <div class="eyebrow">Corporate engagement</div>
+
+                    <h2>
+                        <span class="en">Turn commercial uncertainty into a <em>strategic advantage.</em></span>
+                        <span class="es">Convertir incertidumbre comercial en <em>ventaja estratégica.</em></span>
+                    </h2>
+
+                    <p>
+                        <span class="en">We work with teams that need to make difficult decisions: entering a market, relocating operations, anticipating regulatory risks, or preparing a strategy for the USMCA review.</span>
+                        <span class="es">Trabajamos con equipos que necesitan tomar decisiones difíciles: entrar a un mercado, reubicar operaciones, anticipar riesgos regulatorios o preparar una estrategia frente a la revisión del T-MEC.</span>
+                    </p>
+                </div>
+
+                <div class="cta-actions">
+                    <a href="mailto:contacto@ophionlab.com" class="btn btn-dark">
+                        <span class="en">Schedule a conversation</span>
+                        <span class="es">Agendar conversación</span>
+                        <span class="arrow">→</span>
+                    </a>
+
+                    <div class="contact-card">
+                        <span>Coverage</span>
+                        <strong>
+                            <span class="en">Mexico · United States · Canada</span>
+                            <span class="es">México · Estados Unidos · Canadá</span>
+                        </strong>
+                    </div>
+
+                    <div class="contact-card">
+                        <span>Practice</span>
+                        <strong>Trade, regulation & intelligence</strong>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <div class="footer-grid">
+
+                    <div class="footer-brand">
+                        <a href="#hero" class="logo">Ophion<span>Lab.</span></a>
+
+                        <p>
+                            <span class="en">Strategic intelligence, commercial consulting, and analytical technology firm for cross-border operations in North America.</span>
+                            <span class="es">Firma de inteligencia estratégica, consultoría comercial y tecnología analítica para operaciones transfronterizas en Norteamérica.</span>
+                        </p>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>
+                            <span class="en">Practices</span>
+                            <span class="es">Prácticas</span>
+                        </h4>
+
+                        <ul>
+                            <li><a href="#servicios">
+                                <span class="en">USMCA Compliance</span>
+                                <span class="es">Cumplimiento T-MEC</span>
+                            </a></li>
+                            <li><a href="#servicios">Nearshoring</a></li>
+                            <li><a href="#servicios">
+                                <span class="en">Regulatory Risk</span>
+                                <span class="es">Riesgo regulatorio</span>
+                            </a></li>
+                            <li><a href="#servicios">
+                                <span class="en">Commercial Strategy</span>
+                                <span class="es">Estrategia comercial</span>
+                            </a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>
+                            <span class="en">Capabilities</span>
+                            <span class="es">Capacidades</span>
+                        </h4>
+
+                        <ul>
+                            <li><a href="#tecnologia">
+                                <span class="en">Executive Dashboards</span>
+                                <span class="es">Dashboards ejecutivos</span>
+                            </a></li>
+                            <li><a href="#tecnologia">
+                                <span class="en">Risk Models</span>
+                                <span class="es">Modelos de riesgo</span>
+                            </a></li>
+                            <li><a href="#tecnologia">
+                                <span class="en">Early Warnings</span>
+                                <span class="es">Alertas tempranas</span>
+                            </a></li>
+                            <li><a href="#outputs">
+                                <span class="en">Strategic Briefings</span>
+                                <span class="es">Briefings estratégicos</span>
+                            </a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>
+                            <span class="en">Firm</span>
+                            <span class="es">Firma</span>
+                        </h4>
+
+                        <ul>
+                            <li><a href="#perspectiva">
+                                <span class="en">Perspective</span>
+                                <span class="es">Perspectiva</span>
+                            </a></li>
+                            <li><a href="#outputs">
+                                <span class="en">Deliverables</span>
+                                <span class="es">Entregables</span>
+                            </a></li>
+                            <li><a href="#contacto">
+                                <span class="en">Contact</span>
+                                <span class="es">Contacto</span>
+                            </a></li>
+                            <li><a href="#hero">
+                                <span class="en">Home</span>
+                                <span class="es">Inicio</span>
+                            </a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="footer-bottom">
+                    <div>
+                        <span class="en">&copy; 2026 Ophion Lab Consulting Group. All rights reserved.</span>
+                        <span class="es">&copy; 2026 Ophion Lab Consulting Group. Todos los derechos reservados.</span>
+                    </div>
+                    <div>Strategic Trade Intelligence for North America.</div>
+                </div>
+            </footer>
+
+        </div>
+    </section>
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Language Toggle Logic
+            const langToggleBtn = document.getElementById('langToggle');
+            const body = document.body;
+            
+            langToggleBtn.addEventListener('click', () => {
+                if (body.classList.contains('en')) {
+                    body.classList.remove('en');
+                    body.classList.add('es');
+                    langToggleBtn.innerHTML = '<span class="inactive">EN</span> / <span class="active">ES</span>';
+                } else {
+                    body.classList.remove('es');
+                    body.classList.add('en');
+                    langToggleBtn.innerHTML = '<span class="active">EN</span> / <span class="inactive">ES</span>';
+                }
+            });
+
+            // Navbar Scrolled State
+            const navbar = document.getElementById('navbar');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navCenter = document.querySelector('.nav-center');
+
+            const updateNavbar = () => {
+                if (window.scrollY > 36) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            };
+
+            updateNavbar();
+
+            window.addEventListener('scroll', updateNavbar, {
+                passive: true
+            });
+
+            // Scroll Reveal Animation
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.14
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+
+            revealElements.forEach(element => {
+                revealObserver.observe(element);
+            });
+
+            // Mobile Menu Logic
+            if (mobileMenu && navCenter) {
+                mobileMenu.addEventListener('click', () => {
+                    const isOpen = navCenter.classList.toggle('is-open');
+
+                    if (isOpen) {
+                        navCenter.style.display = 'flex';
+                        navCenter.style.position = 'absolute';
+                        navCenter.style.left = '1.2rem';
+                        navCenter.style.right = '1.2rem';
+                        navCenter.style.top = '4.6rem';
+                        navCenter.style.flexDirection = 'column';
+                        navCenter.style.alignItems = 'flex-start';
+                        navCenter.style.gap = '1rem';
+                        navCenter.style.background = 'rgba(251, 250, 247, 0.98)';
+                        navCenter.style.border = '1px solid #E3DED3';
+                        navCenter.style.padding = '1.2rem';
+                        navCenter.style.boxShadow = '0 18px 50px rgba(23, 23, 23, 0.07)';
+                    } else {
+                        navCenter.removeAttribute('style');
+                    }
+                });
+
+                const navLinks = navCenter.querySelectorAll('a');
+
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (navCenter.classList.contains('is-open')) {
+                            navCenter.classList.remove('is-open');
+                            navCenter.removeAttribute('style');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
